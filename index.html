@@ -452,6 +452,20 @@
     to   { opacity: 0.6; transform: scale(1.5); }
   }
 </style>
+<script>
+  function openVideo() {
+    var modal = document.getElementById('video-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeVideo() {
+    var modal = document.getElementById('video-modal');
+    var video = document.getElementById('modal-video');
+    if (video) { video.pause(); video.currentTime = 0; }
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+</script>
 </head>
 <body>
 
@@ -648,10 +662,8 @@
 <script>
   function openVideo() {
     const modal = document.getElementById('video-modal');
-    const video = document.getElementById('modal-video');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    video.play();
   }
   function closeVideo() {
     const modal = document.getElementById('video-modal');
@@ -664,15 +676,10 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
 
   // Generate scattered particles
-  const container = document.getElementById('particles');
-  const count = 55;
-  for (let i = 0; i < count; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.cssText = `
-      left: ${Math.random() * 100}%;
-      top: ${Math.random() * 100}%;
-      --dur: ${2.5 + Math.random() * 4}s;
-      --delay: ${Math.random() * 5}s;
-      width: ${Math.random() < 0.3 ? 3 : 1.5}px;
-      
+      height: 2px;
+    `;
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>
