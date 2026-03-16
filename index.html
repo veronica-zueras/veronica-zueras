@@ -527,21 +527,17 @@
     <!-- Video cards per language -->
     <div class="videos">
 
-      <!-- Spanish — YouTube embed -->
-      <div class="video-card es">
-        <div class="video-thumb" id="yt-es" style="position:relative; padding:0; background:#000;">
-          <!-- Thumbnail + play overlay until clicked -->
-          <div id="yt-thumb-es" onclick="playVideo('es')" style="position:absolute;inset:0;cursor:pointer;z-index:2;">
-            <img src="https://img.youtube.com/vi/gIaZ0-Uh3sU/mqdefault.jpg"
-              style="width:100%;height:100%;object-fit:cover;display:block;">
-            <div style="position:absolute;inset:0;background:rgba(13,27,42,0.35);display:flex;align-items:center;justify-content:center;">
-              <div style="width:38px;height:38px;border-radius:50%;border:2px solid #E8C97A;background:rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(201,168,76,0.3);">
-                <svg width="13" height="15" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/></svg>
-              </div>
-            </div>
+      <!-- Spanish — click to open modal -->
+      <div class="video-card es" onclick="openVideo()" style="cursor:pointer;">
+        <div class="video-thumb" style="position:relative; background: linear-gradient(to bottom, #c60b1e 33%, #f1bf00 33%, #f1bf00 66%, #c60b1e 66%);">
+          <div style="position:absolute;inset:0;background:rgba(13,27,42,0.5);"></div>
+          <span class="video-badge">ES</span>
+          <span class="video-symbol">🇪🇸</span>
+          <div class="video-play">
+            <svg width="12" height="14" viewBox="0 0 14 16" fill="none">
+              <path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/>
+            </svg>
           </div>
-          <!-- iframe loads on click -->
-          <div id="yt-iframe-es" style="position:absolute;inset:0;display:none;"></div>
         </div>
         <div class="video-meta">
           <span class="video-lang">Español</span>
@@ -611,15 +607,54 @@
   </div>
 </div>
 
+<!-- VIDEO MODAL -->
+<div id="video-modal" onclick="closeVideo()" style="
+  display:none; position:fixed; inset:0; z-index:9999;
+  background:rgba(5,10,18,0.92); backdrop-filter:blur(8px);
+  align-items:center; justify-content:center; padding:20px;">
+  <div onclick="event.stopPropagation()" style="
+    position:relative; width:100%; max-width:860px;
+    border:1px solid #C9A84C;
+    box-shadow:0 0 60px rgba(201,168,76,0.2), 0 30px 80px rgba(0,0,0,0.8);">
+    <div style="height:3px;background:linear-gradient(to right,transparent,#C9A84C,#E8C97A,#C9A84C,transparent);"></div>
+    <button onclick="closeVideo()" style="
+      position:absolute; top:-18px; right:-18px; z-index:2;
+      width:36px; height:36px; border-radius:50%;
+      background:#0D1B2A; border:1px solid #C9A84C;
+      color:#E8C97A; font-size:18px; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 0 12px rgba(201,168,76,0.3);">✕</button>
+    <div style="padding:14px 20px 0; background:#0D1B2A; display:flex; align-items:center; gap:10px;">
+      <span style="font-family:'Cinzel',serif; font-size:12px; letter-spacing:3px; color:#E8C97A;">ESPAÑOL</span>
+      <span style="font-size:14px;">🇪🇸</span>
+      <span style="flex:1; height:1px; background:linear-gradient(to right,#B8922A,transparent);"></span>
+    </div>
+    <div style="position:relative; padding-bottom:56.25%; background:#000;">
+      <iframe id="yt-modal-iframe" src=""
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+    <div style="height:1px;background:linear-gradient(to right,transparent,#B8922A,transparent);"></div>
+  </div>
+</div>
+
 <script>
-  // Play video on click — loads iframe only when needed
-  function playVideo(lang) {
-    const thumb = document.getElementById('yt-thumb-' + lang);
-    const iframeWrap = document.getElementById('yt-iframe-' + lang);
-    thumb.style.display = 'none';
-    iframeWrap.style.display = 'block';
-    iframeWrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/gIaZ0-Uh3sU?autoplay=1&rel=0&modestbranding=1&playsinline=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+  function openVideo() {
+    const modal = document.getElementById('video-modal');
+    const iframe = document.getElementById('yt-modal-iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/gIaZ0-Uh3sU?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
   }
+  function closeVideo() {
+    const modal = document.getElementById('video-modal');
+    const iframe = document.getElementById('yt-modal-iframe');
+    iframe.src = '';
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
 
   // Generate scattered particles
   const container = document.getElementById('particles');
