@@ -527,22 +527,22 @@
     <!-- Video cards per language -->
     <div class="videos">
 
-      <!-- Spanish — thumbnail + open YouTube -->
-      <div class="video-card es" onclick="window.open('https://www.youtube.com/watch?v=gIaZ0-Uh3sU','_blank')" style="cursor:pointer;">
-        <div class="video-thumb" style="position:relative; background:#000;">
-          <img src="https://i.ytimg.com/vi/gIaZ0-Uh3sU/mqdefault.jpg"
-            style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:block;">
-          <div style="position:absolute;inset:0;background:rgba(13,27,42,0.4);display:flex;align-items:center;justify-content:center;z-index:1;">
+      <!-- Spanish — native video modal -->
+      <div class="video-card es" onclick="openVideo()" style="cursor:pointer;">
+        <div class="video-thumb" style="position:relative; background: linear-gradient(to bottom, #c60b1e 33%, #f1bf00 33%, #f1bf00 66%, #c60b1e 66%);">
+          <div style="position:absolute;inset:0;background:rgba(13,27,42,0.45);display:flex;align-items:center;justify-content:center;z-index:1;">
             <div style="width:36px;height:36px;border-radius:50%;border:2px solid #E8C97A;background:rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(201,168,76,0.35);">
               <svg width="12" height="14" viewBox="0 0 14 16" fill="none" style="margin-left:3px;">
                 <path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/>
               </svg>
             </div>
           </div>
+          <span style="position:absolute;top:6px;right:8px;font-family:'Cinzel',serif;font-size:9px;font-weight:600;letter-spacing:1.5px;color:#E8C97A;z-index:2;text-shadow:0 1px 4px rgba(0,0,0,0.8);">ES</span>
+          <span style="position:absolute;bottom:5px;left:8px;font-size:15px;z-index:2;">🇪🇸</span>
         </div>
         <div class="video-meta">
           <span class="video-lang">Español</span>
-          <span class="video-sublabel">Ver presentación ↗</span>
+          <span class="video-sublabel">Ver presentación</span>
         </div>
       </div>
 
@@ -611,38 +611,56 @@
 <!-- VIDEO MODAL -->
 <div id="video-modal" onclick="closeVideo()" style="
   display:none; position:fixed; inset:0; z-index:9999;
-  background:rgba(5,10,18,0.92); backdrop-filter:blur(8px);
+  background:rgba(5,10,18,0.93); backdrop-filter:blur(10px);
   align-items:center; justify-content:center; padding:20px;">
   <div onclick="event.stopPropagation()" style="
     position:relative; width:100%; max-width:860px;
     border:1px solid #C9A84C;
     box-shadow:0 0 60px rgba(201,168,76,0.2), 0 30px 80px rgba(0,0,0,0.8);">
+    <!-- Gold top rule -->
     <div style="height:3px;background:linear-gradient(to right,transparent,#C9A84C,#E8C97A,#C9A84C,transparent);"></div>
+    <!-- Close button -->
     <button onclick="closeVideo()" style="
-      position:absolute; top:-18px; right:-18px; z-index:2;
+      position:absolute; top:-18px; right:-18px; z-index:10;
       width:36px; height:36px; border-radius:50%;
       background:#0D1B2A; border:1px solid #C9A84C;
       color:#E8C97A; font-size:18px; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
       box-shadow:0 0 12px rgba(201,168,76,0.3);">✕</button>
-    <div style="padding:14px 20px 0; background:#0D1B2A; display:flex; align-items:center; gap:10px;">
-      <span style="font-family:'Cinzel',serif; font-size:12px; letter-spacing:3px; color:#E8C97A;">ESPAÑOL</span>
-      <span style="font-size:14px;">🇪🇸</span>
+    <!-- Label bar -->
+    <div style="padding:12px 20px 10px; background:#0D1B2A; display:flex; align-items:center; gap:10px;">
+      <span style="font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; color:#E8C97A;">ESPAÑOL</span>
+      <span style="font-size:13px;">🇪🇸</span>
       <span style="flex:1; height:1px; background:linear-gradient(to right,#B8922A,transparent);"></span>
     </div>
-    <div style="position:relative; padding-bottom:56.25%; background:#000;">
-      <iframe id="yt-modal-iframe" src=""
-        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen></iframe>
+    <!-- Native video player -->
+    <div style="background:#000; line-height:0;">
+      <video id="modal-video" controls playsinline
+        style="width:100%; display:block; max-height:70vh;">
+        <source src="video-es.mp4" type="video/mp4">
+      </video>
     </div>
+    <!-- Gold bottom rule -->
     <div style="height:1px;background:linear-gradient(to right,transparent,#B8922A,transparent);"></div>
   </div>
 </div>
 
 <script>
-  function openVideo() {}
-  function closeVideo() {}
+  function openVideo() {
+    const modal = document.getElementById('video-modal');
+    const video = document.getElementById('modal-video');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    video.play();
+  }
+  function closeVideo() {
+    const modal = document.getElementById('video-modal');
+    const video = document.getElementById('modal-video');
+    video.pause();
+    video.currentTime = 0;
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
 
   // Generate scattered particles
@@ -657,3 +675,4 @@
       --dur: ${2.5 + Math.random() * 4}s;
       --delay: ${Math.random() * 5}s;
       width: ${Math.random() < 0.3 ? 3 : 1.5}px;
+      
