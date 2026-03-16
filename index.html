@@ -234,7 +234,6 @@
   }
   .video-card:hover::before { opacity: 1; }
 
-  /* Artistic flag thumbnail */
   .video-thumb {
     width: 100%;
     aspect-ratio: 16/9;
@@ -528,20 +527,19 @@
     <!-- Video cards per language -->
     <div class="videos">
 
-      <!-- Spanish -->
+      <!-- Spanish — YouTube embed -->
       <div class="video-card es">
-        <div class="video-thumb">
-          <span class="video-badge">ES</span>
-          <span class="video-symbol">🇪🇸</span>
-          <div class="video-play">
-            <svg width="12" height="14" viewBox="0 0 14 16" fill="none">
-              <path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/>
-            </svg>
-          </div>
+        <div class="video-thumb" style="position:relative; padding:0; background:#000;">
+          <iframe
+            src="https://www.youtube.com/embed/gIaZ0-Uh3sU?rel=0&modestbranding=1"
+            style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
         </div>
         <div class="video-meta">
           <span class="video-lang">Español</span>
-          <span class="video-sublabel">Adjuntar vídeo</span>
+          <span class="video-sublabel">Ver presentación</span>
         </div>
       </div>
 
@@ -597,7 +595,7 @@
         <span class="cta-text">LinkedIn</span>
       </a>
       <div class="cta-sep"></div>
-      <a class="cta-link" href="#">
+      <a class="cta-link" href="https://drive.google.com/file/d/1g7CvFaoruw0afGbmMYMZChP6Bg9huNTz/view?usp=drive_link" target="_blank">
         <div class="cta-icon-wrap">
           <span class="cta-icon" style="font-size:18px; color:#C9A84C; font-family:'Montserrat'; font-weight:600; letter-spacing:1px;">CV</span>
         </div>
