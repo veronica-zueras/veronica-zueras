@@ -529,13 +529,19 @@
 
       <!-- Spanish — YouTube embed -->
       <div class="video-card es">
-        <div class="video-thumb" style="position:relative; padding:0; background:#000;">
-          <iframe
-            src="https://www.youtube.com/embed/gIaZ0-Uh3sU?rel=0&modestbranding=1"
-            style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
+        <div class="video-thumb" id="yt-es" style="position:relative; padding:0; background:#000;">
+          <!-- Thumbnail + play overlay until clicked -->
+          <div id="yt-thumb-es" onclick="playVideo('es')" style="position:absolute;inset:0;cursor:pointer;z-index:2;">
+            <img src="https://img.youtube.com/vi/gIaZ0-Uh3sU/mqdefault.jpg"
+              style="width:100%;height:100%;object-fit:cover;display:block;">
+            <div style="position:absolute;inset:0;background:rgba(13,27,42,0.35);display:flex;align-items:center;justify-content:center;">
+              <div style="width:38px;height:38px;border-radius:50%;border:2px solid #E8C97A;background:rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 16px rgba(201,168,76,0.3);">
+                <svg width="13" height="15" viewBox="0 0 14 16" fill="none"><path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/></svg>
+              </div>
+            </div>
+          </div>
+          <!-- iframe loads on click -->
+          <div id="yt-iframe-es" style="position:absolute;inset:0;display:none;"></div>
         </div>
         <div class="video-meta">
           <span class="video-lang">Español</span>
@@ -606,6 +612,15 @@
 </div>
 
 <script>
+  // Play video on click — loads iframe only when needed
+  function playVideo(lang) {
+    const thumb = document.getElementById('yt-thumb-' + lang);
+    const iframeWrap = document.getElementById('yt-iframe-' + lang);
+    thumb.style.display = 'none';
+    iframeWrap.style.display = 'block';
+    iframeWrap.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/gIaZ0-Uh3sU?autoplay=1&rel=0&modestbranding=1&playsinline=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+  }
+
   // Generate scattered particles
   const container = document.getElementById('particles');
   const count = 55;
