@@ -453,15 +453,24 @@
   }
 </style>
 <script>
-  function openVideo() {
+  function openVideo(lang, label, flag) {
     var modal = document.getElementById('video-modal');
+    var video = document.getElementById('modal-video');
+    var langText = document.getElementById('modal-lang-text');
+    var langFlag = document.getElementById('modal-lang-flag');
+    langText.textContent = label.toUpperCase();
+    langFlag.textContent = flag;
+    video.src = 'video-' + lang + '.mp4';
+    video.load();
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
+    var p = video.play();
+    if (p !== undefined) { p.catch(function(){}); }
   }
   function closeVideo() {
     var modal = document.getElementById('video-modal');
     var video = document.getElementById('modal-video');
-    if (video) { video.pause(); video.currentTime = 0; }
+    if (video) { video.pause(); video.currentTime = 0; video.src = ''; }
     modal.style.display = 'none';
     document.body.style.overflow = '';
   }
@@ -541,14 +550,12 @@
     <!-- Video cards per language -->
     <div class="videos">
 
-      <!-- Spanish — native video modal -->
-      <div class="video-card es" onclick="openVideo()" style="cursor:pointer;">
-        <div class="video-thumb" style="position:relative; background: linear-gradient(to bottom, #c60b1e 33%, #f1bf00 33%, #f1bf00 66%, #c60b1e 66%);">
+      <!-- Spanish -->
+      <div class="video-card es" onclick="openVideo('es','Español','🇪🇸')" style="cursor:pointer;">
+        <div class="video-thumb" style="position:relative; background:linear-gradient(to bottom,#c60b1e 33%,#f1bf00 33%,#f1bf00 66%,#c60b1e 66%);">
           <div style="position:absolute;inset:0;background:rgba(13,27,42,0.45);display:flex;align-items:center;justify-content:center;z-index:1;">
             <div style="width:36px;height:36px;border-radius:50%;border:2px solid #E8C97A;background:rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(201,168,76,0.35);">
-              <svg width="12" height="14" viewBox="0 0 14 16" fill="none" style="margin-left:3px;">
-                <path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/>
-              </svg>
+              <svg width="12" height="14" viewBox="0 0 14 16" fill="none" style="margin-left:3px;"><path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/></svg>
             </div>
           </div>
           <span style="position:absolute;top:6px;right:8px;font-family:'Cinzel',serif;font-size:9px;font-weight:600;letter-spacing:1.5px;color:#E8C97A;z-index:2;text-shadow:0 1px 4px rgba(0,0,0,0.8);">ES</span>
@@ -561,36 +568,36 @@
       </div>
 
       <!-- English -->
-      <div class="video-card en">
-        <div class="video-thumb">
-          <span class="video-badge">EN</span>
-          <span class="video-symbol">🇬🇧</span>
-          <div class="video-play">
-            <svg width="12" height="14" viewBox="0 0 14 16" fill="none">
-              <path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/>
-            </svg>
+      <div class="video-card en" onclick="openVideo('en','English','🇬🇧')" style="cursor:pointer;">
+        <div class="video-thumb" style="position:relative; background:#012169;">
+          <div style="position:absolute;inset:0;background:rgba(13,27,42,0.45);display:flex;align-items:center;justify-content:center;z-index:1;">
+            <div style="width:36px;height:36px;border-radius:50%;border:2px solid #E8C97A;background:rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(201,168,76,0.35);">
+              <svg width="12" height="14" viewBox="0 0 14 16" fill="none" style="margin-left:3px;"><path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/></svg>
+            </div>
           </div>
+          <span style="position:absolute;top:6px;right:8px;font-family:'Cinzel',serif;font-size:9px;font-weight:600;letter-spacing:1.5px;color:#E8C97A;z-index:2;text-shadow:0 1px 4px rgba(0,0,0,0.8);">EN</span>
+          <span style="position:absolute;bottom:5px;left:8px;font-size:15px;z-index:2;">🇬🇧</span>
         </div>
         <div class="video-meta">
           <span class="video-lang">English</span>
-          <span class="video-sublabel">Attach video</span>
+          <span class="video-sublabel">Watch presentation</span>
         </div>
       </div>
 
       <!-- French -->
-      <div class="video-card fr">
-        <div class="video-thumb">
-          <span class="video-badge">FR</span>
-          <span class="video-symbol">🇫🇷</span>
-          <div class="video-play">
-            <svg width="12" height="14" viewBox="0 0 14 16" fill="none">
-              <path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/>
-            </svg>
+      <div class="video-card fr" onclick="openVideo('fr','Français','🇫🇷')" style="cursor:pointer;">
+        <div class="video-thumb" style="position:relative; background:linear-gradient(to right,#002395 33%,#fff 33%,#fff 66%,#ed2939 66%);">
+          <div style="position:absolute;inset:0;background:rgba(13,27,42,0.45);display:flex;align-items:center;justify-content:center;z-index:1;">
+            <div style="width:36px;height:36px;border-radius:50%;border:2px solid #E8C97A;background:rgba(201,168,76,0.2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 14px rgba(201,168,76,0.35);">
+              <svg width="12" height="14" viewBox="0 0 14 16" fill="none" style="margin-left:3px;"><path d="M1 1L13 8L1 15V1Z" fill="#E8C97A" stroke="#E8C97A" stroke-width="1"/></svg>
+            </div>
           </div>
+          <span style="position:absolute;top:6px;right:8px;font-family:'Cinzel',serif;font-size:9px;font-weight:600;letter-spacing:1.5px;color:#E8C97A;z-index:2;text-shadow:0 1px 4px rgba(0,0,0,0.8);">FR</span>
+          <span style="position:absolute;bottom:5px;left:8px;font-size:15px;z-index:2;">🇫🇷</span>
         </div>
         <div class="video-meta">
           <span class="video-lang">Français</span>
-          <span class="video-sublabel">Joindre vidéo</span>
+          <span class="video-sublabel">Voir présentation</span>
         </div>
       </div>
 
@@ -622,7 +629,7 @@
   </div>
 </div>
 
-<!-- VIDEO MODAL -->
+<!-- VIDEO MODAL — shared for all 3 languages -->
 <div id="video-modal" onclick="closeVideo()" style="
   display:none; position:fixed; inset:0; z-index:9999;
   background:rgba(5,10,18,0.93); backdrop-filter:blur(10px);
@@ -631,9 +638,7 @@
     position:relative; width:100%; max-width:860px;
     border:1px solid #C9A84C;
     box-shadow:0 0 60px rgba(201,168,76,0.2), 0 30px 80px rgba(0,0,0,0.8);">
-    <!-- Gold top rule -->
     <div style="height:3px;background:linear-gradient(to right,transparent,#C9A84C,#E8C97A,#C9A84C,transparent);"></div>
-    <!-- Close button -->
     <button onclick="closeVideo()" style="
       position:absolute; top:-18px; right:-18px; z-index:10;
       width:36px; height:36px; border-radius:50%;
@@ -641,45 +646,39 @@
       color:#E8C97A; font-size:18px; cursor:pointer;
       display:flex; align-items:center; justify-content:center;
       box-shadow:0 0 12px rgba(201,168,76,0.3);">✕</button>
-    <!-- Label bar -->
-    <div style="padding:12px 20px 10px; background:#0D1B2A; display:flex; align-items:center; gap:10px;">
-      <span style="font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; color:#E8C97A;">ESPAÑOL</span>
-      <span style="font-size:13px;">🇪🇸</span>
+    <div id="modal-label" style="padding:12px 20px 10px; background:#0D1B2A; display:flex; align-items:center; gap:10px;">
+      <span id="modal-lang-text" style="font-family:'Cinzel',serif; font-size:11px; letter-spacing:3px; color:#E8C97A;"></span>
+      <span id="modal-lang-flag" style="font-size:13px;"></span>
       <span style="flex:1; height:1px; background:linear-gradient(to right,#B8922A,transparent);"></span>
     </div>
-    <!-- Native video player -->
     <div style="background:#000; line-height:0;">
-      <video id="modal-video" controls playsinline
+      <video id="modal-video" controls playsinline preload="auto"
         style="width:100%; display:block; max-height:70vh;">
-        <source src="video-es.mp4" type="video/mp4">
       </video>
     </div>
-    <!-- Gold bottom rule -->
     <div style="height:1px;background:linear-gradient(to right,transparent,#B8922A,transparent);"></div>
   </div>
 </div>
 
 <script>
-  function openVideo() {
-    const modal = document.getElementById('video-modal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  }
-  function closeVideo() {
-    const modal = document.getElementById('video-modal');
-    const video = document.getElementById('modal-video');
-    video.pause();
-    video.currentTime = 0;
-    modal.style.display = 'none';
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeVideo(); });
 
   // Generate scattered particles
-      height: 2px;
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 55; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      top: ${Math.random() * 100}%;
+      --dur: ${2.5 + Math.random() * 4}s;
+      --delay: ${Math.random() * 5}s;
+      width: ${Math.random() < 0.3 ? 3 : 1.5}px;
+      height: ${Math.random() < 0.3 ? 3 : 1.5}px;
     `;
     container.appendChild(p);
   }
 </script>
 </body>
+</html>
 </html>
